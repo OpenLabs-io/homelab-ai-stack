@@ -71,6 +71,22 @@ without being able to approve their own actions. Most of the hard-won knowledge
 here is about **fitting things in 16 GB** and **failing loudly instead of
 silently**.
 
+## Describing it to someone technical
+
+If a friend who knows the space asks what I'm actually running:
+
+> On a 16 GB AMD card I run a quantized 27B (IQ3_S) as the primary chat model
+> with a full 64K context — the weights **and** the KV cache both fit in 16 GB
+> thanks to a q8_0 cache. Ollama's on the **Vulkan** backend, not ROCm. Two
+> small models run on CPU to keep the GPU free: a ~2B task model with thinking
+> disabled for Open WebUI's background jobs, plus a `nomic` embedder for RAG.
+> **Tool calling is a separate native-function-calling model on the GPU — not
+> the CPU ones.**
+
+The detail that makes people nod is the fit: a 27B *and* a 64K window in 16 GB
+on Vulkan. The common misconception to head off — the little CPU models do
+background chores and embeddings, **not** tool calls.
+
 ## Not included (on purpose)
 
 This is a sanitized public mirror of a private setup. Internal IPs, hostnames,
